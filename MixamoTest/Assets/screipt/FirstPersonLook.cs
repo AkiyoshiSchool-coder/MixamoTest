@@ -15,6 +15,7 @@ public class FirstPersonLook : MonoBehaviour
     [SerializeField] private CinemachineInputAxisController mcamControl;
 
     [SerializeField] private float normalVision = 60;
+    public  Vector2 mouseDelta;
 
     Vector2 velocity;
     Vector2 frameVelocity;
@@ -49,7 +50,7 @@ public class FirstPersonLook : MonoBehaviour
     void Update()
     {
         // Get smooth velocity.
-        Vector2 mouseDelta = lookAction.ReadValue<Vector2>();
+         mouseDelta = lookAction.ReadValue<Vector2>();
         Vector2 rawFrameVelocity = Vector2.Scale(mouseDelta, Vector2.one * sensitivity);
         frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
         velocity += frameVelocity;

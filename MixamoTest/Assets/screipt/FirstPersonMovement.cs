@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using FMODUnity;
+//using FMODUnity;
+    
 
 public class FirstPersonMovement : MonoBehaviour
 {
@@ -16,20 +17,20 @@ public class FirstPersonMovement : MonoBehaviour
     private InputAction moveAction;
     [SerializeField] private Transform MyCamera;
     [SerializeField] private Vector3 cPos;
-    public StudioEventEmitter steps;
+//    public StudioEventEmitter steps;
     private float stepTimer = 0;
     [SerializeField] private float stepCD;
     private bool playerGrounded;
-    [SerializeField] private GroundCheck groundcode;
+    //[SerializeField] private GroundCheck groundcode;
 
-    Rigidbody rigidbody;
+    Rigidbody rigidbodyy;
     Rigidbody box;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
     void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbodyy = GetComponent<Rigidbody>();
         MyCamera = Camera.main.transform;
         cPos = new Vector3(transform.eulerAngles.x,MyCamera.transform.eulerAngles.y, transform.eulerAngles.z);
     }
@@ -55,22 +56,22 @@ public class FirstPersonMovement : MonoBehaviour
         Vector2 targetVelocity = moveAction.ReadValue<Vector2>() * targetMovingSpeed;
 
         // Apply movement.
-        rigidbody.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
+        rigidbodyy.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbodyy.linearVelocity.y, targetVelocity.y);
         if(box != null) //Se o Push script da box um valor ela se move com ele
         {
-            box.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
+            box.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbodyy.linearVelocity.y, targetVelocity.y);
         }
     }
 
     void Update()
     {
         stepTimer += Time.deltaTime;
-        playerGrounded = groundcode.groundedcheck();
+        /*playerGrounded = groundcode.groundedcheck();
         if(moveAction.IsPressed() && stepTimer > stepCD && playerGrounded)
         {
             stepTimer = 0;
             steps.Play();
-        }
+        }*/
     }
 
     public void PushingObject(Rigidbody rigidbody) //chamado pelo Push Script
