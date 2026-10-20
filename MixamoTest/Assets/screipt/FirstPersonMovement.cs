@@ -25,6 +25,10 @@ public class FirstPersonMovement : MonoBehaviour
 
     Rigidbody rigidbodyy;
     Rigidbody box;
+    [SerializeField] Animator Animator;
+    Vector2 AnimBlendVect;
+    Vector2 AnimVel;
+    [SerializeField] private float AnimSmooth;
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
@@ -66,6 +70,7 @@ public class FirstPersonMovement : MonoBehaviour
     void Update()
     {
         stepTimer += Time.deltaTime;
+        Animacao();
         /*playerGrounded = groundcode.groundedcheck();
         if(moveAction.IsPressed() && stepTimer > stepCD && playerGrounded)
         {
@@ -95,5 +100,13 @@ public class FirstPersonMovement : MonoBehaviour
             speed = 5;
             runSpeed = 9;
         }
+    }
+
+    private void Animacao()
+    {
+        Vector2 Input = moveAction.ReadValue<Vector2>();
+        AnimBlendVect = Vector2.SmoothDamp(AnimBlendVect, Input, ref AnimVel, AnimSmooth);
+        Animator.SetFloat("MoveX", AnimBlendVect.x);
+        Animator.SetFloat("MoveZ", AnimBlendVect.y);
     }
 }
