@@ -76,7 +76,8 @@ public class PlayerControllerCC : MonoBehaviour
         {
             if(JumpAction.WasPressedThisFrame())
             {
-
+                Animator.CrossFade("Jumping",AnimPlayTransition);
+                
                 currentVerticalSpeed = JumpForce;
             }
             else
